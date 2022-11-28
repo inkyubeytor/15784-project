@@ -30,6 +30,9 @@ _GAME_TYPE = pyspiel.GameType(
     parameter_specification=_DEFAULT_PARAMS
 )
 
+global SHIFT_POINTS
+global SHIFT_CARDS
+global SHIFT_PRIZES
 
 class GoofspielGame(pyspiel.Game):
     def __init__(self, params=_DEFAULT_PARAMS):
@@ -65,11 +68,16 @@ class GoofspielState(pyspiel.State):
         self._num_players = game._num_players
         self._num_cards = game._num_cards
         self._num_turns = game._num_turns
-
-        self.cards = np.ones((self._num_players, self._num_cards))
-        self.bets = np.zeros((self._num_turns, self._num_players)) - 1
-        self.points = np.zeros(self._num_players)
-        self.prizes = []
+        self.cards = np.ones((self._num_players, self._num_cards), dtype=int)
+        global SHIFT_CARDS
+        SHIFT_CARDS = 2 ** np.arange(self.cards.size).reshape(self.cards.shape)
+        self.bets = np.zeros((self._num_turns, self._num_players), dtype=int) - 1
+        self.points = np.zeros(self._num_players, dtype=int)
+        global SHIFT_POINTS
+        SHIFT_POINTS = (game._num_cards ** 2) ** np.arange(self.points.size).reshape(self.points.shape)
+        self.prizes = np.zeros(game._num_cards, dtype=int) - 1
+        global SHIFT_PRIZES
+        SHIFT_PRIZES = game._num_cards ** np.arange(self.prizes.size).reshape(self.prizes.shape)
         self._game_over = False
         self._current_turn = 0
         self._next_player = self._num_players
@@ -101,7 +109,7 @@ class GoofspielState(pyspiel.State):
     def _apply_action(self, action):
         """Applies the specified action to the state."""
         if self.is_chance_node():
-            self.prizes.append(action)
+            self.prizes[self._current_turn] = action
         else:
             # make bet
             self.cards[self._next_player, action] = 0
@@ -113,7 +121,7 @@ class GoofspielState(pyspiel.State):
             highest_bet = self.bets[self._current_turn].max()
             highest_bidder = np.where(self.bets[self._current_turn] == highest_bet)[0]
             if len(highest_bidder) == 1:
-                self.points[highest_bidder[0]] += self.prizes[-1]
+                self.points[highest_bidder[0]] += self.prizes[self._current_turn]
             self._current_turn += 1
         if self._current_turn == self._num_turns:
             self._game_over = True
@@ -197,22 +205,14 @@ class GoofspielObserver:
         if "points" in self.dict:
             self.dict["points"] = state.points
         if "prizes" in self.dict:
-            self.dict["prizes"] = np.pad(np.array(state.prizes), (0, self.num_cards - len(state.prizes)))
+            self.dict["prizes"] = state.prizes
         if "cards" in self.dict:
             self.dict["cards"] = state.cards
 
     def string_from(self, state, player):
         """Observation of `state` from the PoV of `player`, as a string."""
-        pieces = []
-        if "player" in self.dict:
-            pieces.append(f"p{player}")
-        if "points" in self.dict:
-            pieces.append(f"points: {state.points}")
-        if "prizes" in self.dict:
-            pieces.append(f"prizes: {state.prizes}")
-        if "cards" in self.dict:
-            pieces.append(f"cards: {state.cards}")
-        return " ".join(str(p) for p in pieces)
+        return f"p{player} points: {(state.points * SHIFT_POINTS).sum()} prizes: {(state.prizes * SHIFT_PRIZES).sum()} cards: {(state.cards * SHIFT_CARDS).sum()}"
+
 
 
 # Register the game with the OpenSpiel library
