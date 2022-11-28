@@ -33,9 +33,9 @@ _GAME_TYPE = pyspiel.GameType(
 
 class GoofspielGame(pyspiel.Game):
     def __init__(self, params=_DEFAULT_PARAMS):
-        self.num_players = params["players"]
-        self.num_cards = params["num_cards"]
-        self.num_turns = params["num_turns"]
+        self._num_players = params["players"]
+        self._num_cards = params["num_cards"]
+        self._num_turns = params["num_turns"]
         game_info = pyspiel.GameInfo(
             num_distinct_actions=params["num_cards"],
             max_chance_outcomes=params["num_cards"] if params["points_order"] == "random" else 0,
@@ -55,19 +55,19 @@ class GoofspielGame(pyspiel.Game):
         """Returns an object used for observing game state."""
         return GoofspielObserver(
             iig_obs_type or pyspiel.IIGObservationType(perfect_recall=False),
-            self.num_players, self.num_cards, self.num_turns, params)
+            self._num_players, self._num_cards, self._num_turns, params)
 
 
 class GoofspielState(pyspiel.State):
     def __init__(self, game):
         """Constructor; should only be called by Game.new_initial_state."""
         super().__init__(game)
-        self._num_players = game.num_players
-        self._num_cards = game.num_cards
-        self._num_turns = game.num_turns
+        self._num_players = game._num_players
+        self._num_cards = game._num_cards
+        self._num_turns = game._num_turns
 
         self.cards = np.ones((self._num_players, self._num_cards))
-        self.bets = np.zeros((self._num_turns, self._num_players))
+        self.bets = np.zeros((self._num_turns, self._num_players)) - 1
         self.points = np.zeros(self._num_players)
         self.prizes = []
         self._game_over = False
@@ -104,8 +104,9 @@ class GoofspielState(pyspiel.State):
             self.prizes.append(action)
         else:
             # make bet
+            self.cards[self._next_player, action] = 0
             self.bets[self._current_turn, self._next_player] = action
-            self._next_player = self._next_player + 1 if self._next_player < self._num_players else 0
+        self._next_player = self._next_player + 1 if self._next_player < self._num_players else 0
         # after all players have bet, reward the player with the highest bet
         # if highest bets tie, throw out the card
         if self._next_player == self._num_players:
@@ -139,7 +140,7 @@ class GoofspielState(pyspiel.State):
 
     def __str__(self):
         """String for debug purposes. No particular semantics are required."""
-        return self.prizes, self.cards, self.bets, self.points
+        return str((self.prizes, self.cards, self.bets, self.points))
 
 
 class GoofspielObserver:

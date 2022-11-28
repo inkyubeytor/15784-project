@@ -2,10 +2,10 @@ from absl.testing import absltest
 import numpy as np
 
 from open_spiel.python import policy
+from open_spiel.python.algorithms import cfr
 from open_spiel.python.algorithms import exploitability
 from open_spiel.python.algorithms import sequence_form_lp
 from open_spiel.python.algorithms.get_all_states import get_all_states
-from open_spiel.python.games import kuhn_poker  # pylint: disable=unused-import
 from open_spiel.python.observation import make_observation
 import pyspiel
 
@@ -14,10 +14,10 @@ from goofspiel import *
 
 class GoofspielTest(absltest.TestCase):
 
-  def test_game_from_cc(self):
-    """Runs our standard game tests, checking API consistency."""
-    game = pyspiel.load_game("python_goofspiel")
-    pyspiel.random_sim_test(game, num_sims=10, serialize=False, verbose=True)
+  # def test_game_from_cc(self):
+  #   """Runs our standard game tests, checking API consistency."""
+  #   game = pyspiel.load_game("python_goofspiel")
+  #   pyspiel.random_sim_test(game, num_sims=10, serialize=False, verbose=True)
 
   # def test_consistent(self):
   #   """Checks the Python and C++ game implementations are the same."""
@@ -70,6 +70,30 @@ class GoofspielTest(absltest.TestCase):
   #   """Runs a C++ CFR algorithm on the game."""
   #   game = pyspiel.load_game("python_goofspiel")
   #   unused_results = pyspiel.CFRSolver(game)
+
+  def test_random_game(self):
+    """Tests basic API functions."""
+    # This is here mostly to show the API by example.
+    # More serious simulation tests are done in python/tests/games_sim_test.py
+    # and in test_game_from_cc (below), both of which test the conformance to
+    # the API thoroughly.
+    game = GoofspielGame()
+    state = game.new_initial_state()
+    while not state.is_terminal():
+      print(state)
+      cur_player = state.current_player()
+      legal_actions = state.legal_actions()
+      action = np.random.choice(legal_actions)
+      print("Player {} chooses action {}".format(cur_player, action))
+      state.apply_action(action)
+    print(state)
+    print("Returns: {}".format(state.returns()))
+
+  def test_cfr_py(self):
+    game = pyspiel.load_game("python_goofspiel")
+    solver = cfr.CFRSolver(game)
+    for i in range(1):
+      solver.evaluate_and_update_policy()
 
 
 if __name__ == "__main__":
