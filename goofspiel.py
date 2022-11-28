@@ -123,7 +123,7 @@ class GoofspielState(pyspiel.State):
             highest_bet = current_bets.max()
             highest_bidder = np.where(current_bets == highest_bet)[0]
             if len(highest_bidder) == 1:
-                self.points[highest_bidder[0]] += self.prizes[self._current_turn]
+                self.points[highest_bidder[0]] += self.prizes[self._current_turn] + 1
             self._current_turn += 1
         if self._current_turn == self._num_turns:
             self._game_over = True
@@ -165,7 +165,7 @@ class GoofspielObserver:
 
         # Determine which observation pieces we want to include.
         pieces = [("player", num_players, (num_players,))]
-        if iig_obs_type.public_info and not iig_obs_type.perfect_recall:
+        if iig_obs_type.public_info and not iig_obs_type .perfect_recall:
             pieces.append(("current_prize", 1, (1,)))
             pieces.append(("remaining_prizes", num_cards, (num_cards,)))
         if iig_obs_type.public_info:
