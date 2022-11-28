@@ -77,7 +77,7 @@ class GoofspielState(pyspiel.State):
         SHIFT_POINTS = (game._num_cards ** 2) ** np.arange(self.points.size).reshape(self.points.shape)
         self.prizes = np.zeros(game._num_cards, dtype=int) - 1
         global SHIFT_PRIZES
-        SHIFT_PRIZES = game._num_cards ** np.arange(self.prizes.size).reshape(self.prizes.shape)
+        SHIFT_PRIZES = (game._num_cards + 1) ** np.arange(self.prizes.size).reshape(self.prizes.shape)
         self._game_over = False
         self._current_turn = 0
         self._next_player = self._num_players
@@ -211,7 +211,7 @@ class GoofspielObserver:
 
     def string_from(self, state, player):
         """Observation of `state` from the PoV of `player`, as a string."""
-        return f"p{player} points: {(state.points * SHIFT_POINTS).sum()} prizes: {(state.prizes * SHIFT_PRIZES).sum()} cards: {(state.cards * SHIFT_CARDS).sum()}"
+        return f"p{player} points: {(state.points * SHIFT_POINTS).sum()} prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()} cards: {(state.cards * SHIFT_CARDS).sum()}"
 
 
 
