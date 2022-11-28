@@ -87,10 +87,11 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
             for action, action_prob in state.chance_outcomes():
                 assert action_prob > 0
                 new_state = state.child(action)
-                new_reach_probabilities = reach_probabilities.copy()
-                new_reach_probabilities[-1] *= action_prob
+                old = reach_probabilities[-1]
+                reach_probabilities[-1] *= action_prob
                 state_value += action_prob * self._compute_counterfactual_regret_for_player(
-                    new_state, policies, new_reach_probabilities, player)
+                    new_state, policies, reach_probabilities, player)
+                reach_probabilities[-1] = old
             return state_value
 
         current_player = state.current_player()
@@ -120,13 +121,14 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
         for action in state.legal_actions():
             action_prob = info_state_policy.get(action, 0.)
             new_state = state.child(action)
-            new_reach_probabilities = reach_probabilities.copy()
-            new_reach_probabilities[current_player] *= action_prob
+            old = reach_probabilities[current_player]
+            reach_probabilities[current_player] *= action_prob
             child_utility = self._compute_counterfactual_regret_for_player(
                 new_state,
                 policies=policies,
-                reach_probabilities=new_reach_probabilities,
+                reach_probabilities=reach_probabilities,
                 player=player)
+            reach_probabilities[current_player] = old
 
             state_value += action_prob * child_utility
             children_utilities[action] = child_utility
@@ -153,10 +155,10 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
 
             info_state_node = self._info_state_nodes[info_state]
             info_state_node.cumulative_regret[action] += cfr_regret
+            scale = self._iteration ** self.gamma
             if self._linear_averaging:
                 info_state_node.cumulative_policy[action] += (
-                        reach_prob * action_prob * (
-                        self._iteration ** self.gamma))
+                        reach_prob * action_prob * scale)
             else:
                 info_state_node.cumulative_policy[
                     action] += reach_prob * action_prob
