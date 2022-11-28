@@ -87,11 +87,8 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
             for action, action_prob in state.chance_outcomes():
                 assert action_prob > 0
                 new_state = state.child(action)
-                old = reach_probabilities[-1]
-                reach_probabilities[-1] *= action_prob
                 state_value += action_prob * self._compute_counterfactual_regret_for_player(
                     new_state, policies, reach_probabilities, player)
-                reach_probabilities[-1] = old
             return state_value
 
         current_player = state.current_player()
@@ -102,7 +99,7 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
         # The value we return here is not used in practice. If the conditional
         # statement is True, then the last taken action has probability 0 of
         # occurring, so the returned value is not impacting the parent node value.
-        if all(reach_probabilities[:-1] == 0):
+        if reach_probabilities[player] == 0:
             return np.zeros(self._num_players)
 
         state_value = np.zeros(self._num_players)
@@ -121,14 +118,16 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
         for action in state.legal_actions():
             action_prob = info_state_policy.get(action, 0.)
             new_state = state.child(action)
-            old = reach_probabilities[current_player]
-            reach_probabilities[current_player] *= action_prob
+            if current_player == player:
+                old = reach_probabilities[current_player]
+                reach_probabilities[current_player] *= action_prob
             child_utility = self._compute_counterfactual_regret_for_player(
                 new_state,
                 policies=policies,
                 reach_probabilities=reach_probabilities,
                 player=player)
-            reach_probabilities[current_player] = old
+            if current_player == player:
+                reach_probabilities[current_player] = old
 
             state_value += action_prob * child_utility
             children_utilities[action] = child_utility
@@ -142,13 +141,10 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
             return state_value
 
         reach_prob = reach_probabilities[current_player]
-        counterfactual_reach_prob = (
-                np.prod(reach_probabilities[:current_player]) *
-                np.prod(reach_probabilities[current_player + 1:]))
         state_value_for_player = state_value[current_player]
 
         for action, action_prob in info_state_policy.items():
-            cfr_regret = counterfactual_reach_prob * (
+            cfr_regret = (
                     children_utilities[action][
                         current_player] - state_value_for_player)
             self.optimism[(info_state_node.index_in_tabular_policy, action)] = cfr_regret
