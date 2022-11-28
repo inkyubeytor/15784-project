@@ -14,10 +14,10 @@ from goofspiel import *
 
 class GoofspielTest(absltest.TestCase):
 
-  # def test_game_from_cc(self):
-  #   """Runs our standard game tests, checking API consistency."""
-  #   game = pyspiel.load_game("python_goofspiel")
-  #   pyspiel.random_sim_test(game, num_sims=10, serialize=False, verbose=True)
+  def test_game_from_cc(self):
+    """Runs our standard game tests, checking API consistency."""
+    game = pyspiel.load_game("python_goofspiel")
+    pyspiel.random_sim_test(game, num_sims=10, serialize=False, verbose=True)
 
   # def test_consistent(self):
   #   """Checks the Python and C++ game implementations are the same."""
@@ -73,10 +73,6 @@ class GoofspielTest(absltest.TestCase):
 
   def test_random_game(self):
     """Tests basic API functions."""
-    # This is here mostly to show the API by example.
-    # More serious simulation tests are done in python/tests/games_sim_test.py
-    # and in test_game_from_cc (below), both of which test the conformance to
-    # the API thoroughly.
     game = GoofspielGame()
     state = game.new_initial_state()
     while not state.is_terminal():

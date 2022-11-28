@@ -6,8 +6,8 @@ import pyspiel
 
 _DEFAULT_PARAMS = {
     "imp_info": False,
-    "num_cards": 13,
-    "num_turns": 13,
+    "num_cards": 4,
+    "num_turns": 4,
     "players": 2,
     "points_order": "random",
     "returns_type": "win_loss"
@@ -43,7 +43,7 @@ class GoofspielGame(pyspiel.Game):
             min_utility=-1.0,
             max_utility=1.0,
             utility_sum=0.0,
-            max_game_length=params["num_turns"]
+            max_game_length=params["num_turns"] * params["players"]
         )
         super().__init__(_GAME_TYPE, game_info, params or dict())
 
@@ -132,10 +132,12 @@ class GoofspielState(pyspiel.State):
     def returns(self):
         """Total reward for each player over the course of the game so far."""
         if not self._game_over:
-            return [0., 0.]
+            return [0.] * self._num_players
         else:
             highest_points = self.points.max()
             winners = np.where(self.points == highest_points)[0]
+            if len(winners):
+                return [0.] * self._num_players
             return [1.0 / len(winners) if i in winners else -1.0 / (self._num_players - len(winners)) for i in range(self._num_players)]
 
     def __str__(self):
