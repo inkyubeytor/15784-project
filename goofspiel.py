@@ -136,7 +136,7 @@ class GoofspielState(pyspiel.State):
         else:
             highest_points = self.points.max()
             winners = np.where(self.points == highest_points)[0]
-            if len(winners):
+            if len(winners) == self._num_players:
                 return [0.] * self._num_players
             return [1.0 / len(winners) if i in winners else -1.0 / (self._num_players - len(winners)) for i in range(self._num_players)]
 

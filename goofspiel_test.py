@@ -66,10 +66,10 @@ class GoofspielTest(absltest.TestCase):
   #   self.assertAlmostEqual(
   #       pyspiel.exploitability(game, test_policy), expected_nash_conv / 2)
 
-  # def test_cfr_cc(self):
-  #   """Runs a C++ CFR algorithm on the game."""
-  #   game = pyspiel.load_game("python_goofspiel")
-  #   unused_results = pyspiel.CFRSolver(game)
+  def test_cfr_cc(self):
+    """Runs a C++ CFR algorithm on the game."""
+    game = pyspiel.load_game("python_goofspiel")
+    unused_results = pyspiel.CFRSolver(game)
 
   def test_random_game(self):
     """Tests basic API functions."""
