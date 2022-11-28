@@ -111,14 +111,17 @@ class GoofspielState(pyspiel.State):
             self.prizes[self._current_turn] = action
         else:
             # make bet
-            self.cards[self._next_player, action] = 0
+            # self.cards[self._next_player, action] = 0
             self.bets[self._current_turn, self._next_player] = action
         self._next_player = self._next_player + 1 if self._next_player < self._num_players else 0
         # after all players have bet, reward the player with the highest bet
         # if highest bets tie, throw out the card
         if self._next_player == self._num_players:
-            highest_bet = self.bets[self._current_turn].max()
-            highest_bidder = np.where(self.bets[self._current_turn] == highest_bet)[0]
+            current_bets = self.bets[self._current_turn]
+            for player, bet in enumerate(current_bets):
+                self.cards[player, bet] = 0
+            highest_bet = current_bets.max()
+            highest_bidder = np.where(current_bets == highest_bet)[0]
             if len(highest_bidder) == 1:
                 self.points[highest_bidder[0]] += self.prizes[self._current_turn]
             self._current_turn += 1
@@ -199,7 +202,7 @@ class GoofspielObserver:
         if "prizes" in self.dict:
             self.dict["prizes"] = state.prizes
         if "current_prize" in self.dict:
-            self.dict["current_prize"] = state.prizes[state._current_turn]
+            self.dict["current_prize"] = state.prizes[state._current_turn] if state._current_turn < state._num_turns else -1
         if "remaining_prizes" in self.dict:
             remain = np.ones(state._num_cards)
             remain[state.prizes[:state._current_turn + 1]] = 0
