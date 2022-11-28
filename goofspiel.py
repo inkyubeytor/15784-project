@@ -31,6 +31,8 @@ _GAME_TYPE = pyspiel.GameType(
 global SHIFT_POINTS
 global SHIFT_CARDS
 global SHIFT_PRIZES
+global SHIFT_BETS
+
 
 class GoofspielGame(pyspiel.Game):
     def __init__(self, params=_DEFAULT_PARAMS):
@@ -67,16 +69,23 @@ class GoofspielState(pyspiel.State):
         self._num_players = game._num_players
         self._num_cards = game._num_cards
         self._num_turns = game._num_turns
+
         self.cards = np.ones((self._num_players, self._num_cards), dtype=int)
         global SHIFT_CARDS
         SHIFT_CARDS = 2 ** np.arange(self.cards.size).reshape(self.cards.shape)
+
         self.bets = np.zeros((self._num_turns, self._num_players), dtype=int) - 1
+        global SHIFT_BETS
+        SHIFT_BETS = (game._num_cards + 1) ** np.arange(self.bets.size).reshape(self.bets.shape)
+
         self.points = np.zeros(self._num_players, dtype=int)
         global SHIFT_POINTS
         SHIFT_POINTS = (game._num_cards ** 2) ** np.arange(self.points.size).reshape(self.points.shape)
+
         self.prizes = np.zeros(game._num_cards, dtype=int) - 1
         global SHIFT_PRIZES
         SHIFT_PRIZES = (game._num_cards + 1) ** np.arange(self.prizes.size).reshape(self.prizes.shape)
+
         self._game_over = False
         self._current_turn = 0
         self._next_player = self._num_players
@@ -152,7 +161,7 @@ class GoofspielState(pyspiel.State):
 
     def __str__(self):
         """String for debug purposes. No particular semantics are required."""
-        return str((self.prizes, self.cards, self.bets, self.points))
+        return f"p{self.current_player()} points: {(self.points * SHIFT_POINTS).sum()} prizes: {((self.prizes + 1) * SHIFT_PRIZES).sum()} cards: {(self.cards * SHIFT_CARDS).sum()} bets: {((self.bets + 1) * SHIFT_BETS)[:self._current_turn].sum()} {self.bets[self._current_turn, self._next_player - 1]}"
 
 
 class GoofspielObserver:
@@ -218,7 +227,7 @@ class GoofspielObserver:
 
     def string_from(self, state, player):
         """Observation of `state` from the PoV of `player`, as a string."""
-        return f"p{player} points: {(state.points * SHIFT_POINTS).sum()} prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()} cards: {(state.cards * SHIFT_CARDS).sum()}"
+        return f"p{player} points: {(state.points * SHIFT_POINTS).sum()} prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()} cards: {(state.cards * SHIFT_CARDS).sum()} bets: {((state.bets + 1) * SHIFT_BETS).sum()}"
 
 
 
