@@ -165,9 +165,6 @@ class GoofspielObserver:
         if iig_obs_type.public_info and not iig_obs_type.perfect_recall:
             pieces.append(("current_prize", 1, (1,)))
             pieces.append(("remaining_prizes", num_cards, (num_cards,)))
-            pass
-            # WriteCurrentPointCard(game, state, allocator);
-            # WriteRemainingPointCards(game, state, allocator);
         if iig_obs_type.public_info:
             pieces.append(("points", num_players, (num_players,)))
         if imp_info and iig_obs_type.private_info == pyspiel.PrivateInfoType.SINGLE_PLAYER:
@@ -201,6 +198,12 @@ class GoofspielObserver:
             self.dict["points"] = state.points
         if "prizes" in self.dict:
             self.dict["prizes"] = state.prizes
+        if "current_prize" in self.dict:
+            self.dict["current_prize"] = state.prizes[state._current_turn]
+        if "remaining_prizes" in self.dict:
+            remain = np.ones(state._num_cards)
+            remain[state.prizes[:state._current_turn + 1]] = 0
+            self.dict["remaining_prizes"] = remain
         if "win_sequence" in self.dict:
             self.dict["win_sequence"] = np.argmax(state.bets, axis=1)
         if "private_action_sequence" in self.dict:
