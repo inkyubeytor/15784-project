@@ -161,8 +161,14 @@ class GoofspielState(pyspiel.State):
 
     def __str__(self):
         """String for debug purposes. No particular semantics are required."""
-        return f"p{self.current_player()} points: {(self.points * SHIFT_POINTS).sum()} prizes: {((self.prizes + 1) * SHIFT_PRIZES).sum()} cards: {(self.cards * SHIFT_CARDS).sum()} bets: {((self.bets + 1) * SHIFT_BETS)[:self._current_turn].sum()} {self.bets[self._current_turn, self._next_player - 1]}"
-
+        return (
+            f"p{self.current_player()}"
+            f"points: {(self.points * SHIFT_POINTS).sum()}"
+            f"prizes: {((self.prizes + 1) * SHIFT_PRIZES).sum()}"
+            f"cards: {(self.cards * SHIFT_CARDS).sum()}"
+            # f"bets: {((self.bets + 1) * SHIFT_BETS)[:self._current_turn].sum()}"
+            f"{self.bets[self._current_turn, self._next_player - 1]}"
+        )
 
 class GoofspielObserver:
     """Observer, conforming to the PyObserver interface (see observation.py)."""
@@ -227,7 +233,23 @@ class GoofspielObserver:
 
     def string_from(self, state, player):
         """Observation of `state` from the PoV of `player`, as a string."""
-        return f"p{player} points: {(state.points * SHIFT_POINTS).sum()} prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()} cards: {(state.cards * SHIFT_CARDS).sum()} bets: {((state.bets + 1) * SHIFT_BETS).sum()}"
+        if state.current_player() == player:
+            return (
+                f"p{state.current_player()}"
+                f"points: {(state.points * SHIFT_POINTS).sum()}"
+                f"prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()}"
+                f"cards: {(state.cards * SHIFT_CARDS).sum()}"
+                # f"bets: {((state.bets + 1) * SHIFT_BETS)[:state._current_turn].sum()}"
+                f"{state.bets[state._current_turn, state._next_player - 1]}"
+            )
+        else:
+            return (
+                f"p{state.current_player()}"
+                f"points: {(state.points * SHIFT_POINTS).sum()}"
+                f"prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()}"
+                f"cards: {(state.cards * SHIFT_CARDS).sum()}"
+                # f"bets: {((state.bets + 1) * SHIFT_BETS)[:state._current_turn].sum()}"
+            )
 
 
 

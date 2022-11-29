@@ -10,13 +10,13 @@ from exploitability import *
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_integer("iterations", 4, "Number of iterations")
+flags.DEFINE_integer("iterations", 30, "Number of iterations")
 flags.DEFINE_string(
     "game",
     "python_goofspiel(num_cards=4,num_turns=4)",
     "Name of the game")
 flags.DEFINE_integer("players", 2, "Number of players")
-flags.DEFINE_integer("print_freq", -1,
+flags.DEFINE_integer("print_freq", 10,
                      "How often to print the exploitability")
 
 
@@ -56,10 +56,10 @@ def main(_):
 
 
 if __name__ == "__main__":
-    # app.run(main)
-    cProfile.run("app.run(main)", "py_3_3_stats")
-
-    import pstats
-    from pstats import SortKey
-    p = pstats.Stats("py_3_3_stats")
-    p.strip_dirs().sort_stats(SortKey.CUMULATIVE).print_stats(.05)
+    app.run(main)
+    # cProfile.run("app.run(main)", "py_3_3_stats")
+    #
+    # import pstats
+    # from pstats import SortKey
+    # p = pstats.Stats("py_3_3_stats")
+    # p.strip_dirs().sort_stats(SortKey.CUMULATIVE).print_stats(.05)

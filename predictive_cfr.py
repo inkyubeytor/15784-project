@@ -20,6 +20,7 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
                                           regret_matching_plus)
         self.gamma = gamma
         self.optimism = {}
+        self.cache = {}
 
         # We build a list of the nodes for all players, which will be updated
         # within `evaluate_and_update_policy`.
@@ -60,6 +61,7 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
         for action in info_state_node.legal_actions:
             self._initialize_info_state_nodes(state.child(action))
 
+
     def _compute_counterfactual_regret_for_player(self, state, policies,
                                                   reach_probabilities, player):
         """Increments the cumulative regrets and policy for `player`. This is
@@ -86,7 +88,12 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
             state_value = 0.0
             for action, action_prob in state.chance_outcomes():
                 assert action_prob > 0
-                new_state = state.child(action)
+                k = (str(state), action)
+                if k in self.cache:
+                    new_state = self.cache[k]
+                else:
+                    new_state = state.child(action)
+                    self.cache[k] = new_state
                 old = reach_probabilities[-1]
                 reach_probabilities[-1] *= action_prob
                 state_value += action_prob * self._compute_counterfactual_regret_for_player(
@@ -120,7 +127,12 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
             info_state_policy = policies[current_player](info_state)
         for action in state.legal_actions():
             action_prob = info_state_policy.get(action, 0.)
-            new_state = state.child(action)
+            k = (str(state), action)
+            if k in self.cache:
+                new_state = self.cache[k]
+            else:
+                new_state = state.child(action)
+                self.cache[k] = new_state
             old = reach_probabilities[current_player]
             reach_probabilities[current_player] *= action_prob
             child_utility = self._compute_counterfactual_regret_for_player(
