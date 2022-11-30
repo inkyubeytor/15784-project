@@ -162,12 +162,22 @@ class GoofspielState(pyspiel.State):
     def __str__(self):
         """String for debug purposes. No particular semantics are required."""
         return (
+            f"p{self.current_player()}\n"
+            f"points: {self.points}\n"
+            f"prizes: {self.prizes}\n"
+            f"cards: {self.cards}\n"
+            f"bets: {self.bets}\n\n"
+        )
+
+    def __repr__(self):
+        return (
             f"p{self.current_player()}"
             f"points: {(self.points * SHIFT_POINTS).sum()}"
             f"prizes: {((self.prizes + 1) * SHIFT_PRIZES).sum()}"
             f"cards: {(self.cards * SHIFT_CARDS).sum()}"
+            f"{((self.bets + 1) * SHIFT_BETS).sum()}"
             # f"bets: {((self.bets + 1) * SHIFT_BETS)[:self._current_turn].sum()}"
-            f"{self.bets[self._current_turn, self._next_player - 1]}"
+            # f"{self.bets[self._current_turn, self._next_player - 1]}"
         )
 
 class GoofspielObserver:

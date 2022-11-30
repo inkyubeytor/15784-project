@@ -88,7 +88,7 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
             state_value = 0.0
             for action, action_prob in state.chance_outcomes():
                 assert action_prob > 0
-                k = (str(state), action)
+                k = (repr(state), action)
                 if k in self.cache:
                     new_state = self.cache[k]
                 else:
@@ -127,7 +127,7 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
             info_state_policy = policies[current_player](info_state)
         for action in state.legal_actions():
             action_prob = info_state_policy.get(action, 0.)
-            k = (str(state), action)
+            k = (repr(state), action)
             if k in self.cache:
                 new_state = self.cache[k]
             else:
