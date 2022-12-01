@@ -93,7 +93,7 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
                     new_state = self.cache[k]
                 else:
                     new_state = state.child(action)
-                    self.cache[k] = new_state
+                    # self.cache[k] = new_state
                 old = reach_probabilities[-1]
                 reach_probabilities[-1] *= action_prob
                 state_value += action_prob * self._compute_counterfactual_regret_for_player(
@@ -132,7 +132,7 @@ class _PCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
                 new_state = self.cache[k]
             else:
                 new_state = state.child(action)
-                self.cache[k] = new_state
+                # self.cache[k] = new_state
             old = reach_probabilities[current_player]
             reach_probabilities[current_player] *= action_prob
             child_utility = self._compute_counterfactual_regret_for_player(

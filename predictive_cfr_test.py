@@ -10,7 +10,7 @@ from exploitability import *
 import resource
 
 game_str = "python_goofspiel(num_cards=5,num_turns=3)"
-print(game_str)
+
 
 FLAGS = flags.FLAGS
 
