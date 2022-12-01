@@ -14,7 +14,7 @@ FLAGS = flags.FLAGS
 flags.DEFINE_integer("iterations", 5, "Number of iterations")
 flags.DEFINE_string(
     "game",
-    "python_goofspiel(num_cards=4,num_turns=4)",
+    "python_goofspiel(num_cards=5,num_turns=3)",
     "Name of the game")
 flags.DEFINE_integer("players", 2, "Number of players")
 flags.DEFINE_integer("print_freq", 4,
