@@ -178,7 +178,7 @@ class GoofspielState(pyspiel.State):
             f"points: {(self.points * SHIFT_POINTS).sum()}"
             f"prizes: {((self.prizes + 1) * SHIFT_PRIZES).sum()}"
             f"cards: {(self.cards * SHIFT_CARDS).sum()}"
-            f"bets: {((self.bets + 1) * SHIFT_BETS).sum()}"
+            f"bets: {((self.bets + 1) * SHIFT_BETS)[self._current_turn].sum() if self._current_turn < self._num_turns else -1}"
         )
 
 class GoofspielObserver:

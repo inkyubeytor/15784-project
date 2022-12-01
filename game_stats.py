@@ -6,7 +6,7 @@ from predictive_cfr import PCFRSolver
 
 from goofspiel import *
 
-game_str = "python_goofspiel(num_cards=4,num_turns=4,knowledge_type=private_only)"
+game_str = "python_goofspiel(num_cards=3,num_turns=3,knowledge_type=no_po)"
 
 
 FLAGS = flags.FLAGS
