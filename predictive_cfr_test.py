@@ -9,18 +9,18 @@ from goofspiel import *
 from exploitability import *
 import resource
 
-game_str = "python_goofspiel(num_cards=5,num_turns=3)"
+game_str = "python_goofspiel(num_cards=5,num_turns=3,knowledge_type=private_only)"
 
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_integer("iterations", 100, "Number of iterations")
+flags.DEFINE_integer("iterations", 5, "Number of iterations")
 flags.DEFINE_string(
     "game",
     game_str,
     "Name of the game")
 flags.DEFINE_integer("players", 2, "Number of players")
-flags.DEFINE_integer("print_freq", 5,
+flags.DEFINE_integer("print_freq", -1,
                      "How often to print the exploitability")
 
 

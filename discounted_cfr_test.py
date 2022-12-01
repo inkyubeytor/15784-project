@@ -9,7 +9,7 @@ from goofspiel import *
 from exploitability import *
 import resource
 
-game_str = "python_goofspiel(num_cards=5,num_turns=3)"
+game_str = "python_goofspiel(num_cards=4,num_turns=4,knowledge_type=private_only)"
 
 
 FLAGS = flags.FLAGS
