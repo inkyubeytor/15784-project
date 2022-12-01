@@ -3,7 +3,7 @@ import numpy as np
 import pyspiel
 
 _DEFAULT_PARAMS = {
-    "imp_info": False,
+    "knowledge_type": "perfect",
     "num_cards": 4,
     "num_turns": 4,
     "players": 2,
@@ -36,7 +36,7 @@ global SHIFT_BETS
 
 class GoofspielGame(pyspiel.Game):
     def __init__(self, params=_DEFAULT_PARAMS):
-        self._imp_info = params["imp_info"]
+        self._knowledge_type = params["knowledge_type"]
         self._num_players = params["players"]
         self._num_cards = params["num_cards"]
         self._num_turns = params["num_turns"]
@@ -59,7 +59,7 @@ class GoofspielGame(pyspiel.Game):
         """Returns an object used for observing game state."""
         return GoofspielObserver(
             iig_obs_type or pyspiel.IIGObservationType(perfect_recall=False),
-            self._imp_info, self._num_players, self._num_cards, self._num_turns, params)
+            self._knowledge_type, self._num_players, self._num_cards, self._num_turns, params)
 
 
 class GoofspielState(pyspiel.State):
@@ -184,73 +184,101 @@ class GoofspielState(pyspiel.State):
 class GoofspielObserver:
     """Observer, conforming to the PyObserver interface (see observation.py)."""
 
-    def __init__(self, iig_obs_type, imp_info, num_players, num_cards, num_turns, params):
+    def __init__(self, iig_obs_type, knowledge_type, num_players, num_cards, num_turns, params):
         """Initializes an empty observation tensor."""
-        if params:
-            raise ValueError(f"Observation parameters not supported; passed {params}")
-
-        # Determine which observation pieces we want to include.
-        pieces = [("player", num_players, (num_players,))]
-        if iig_obs_type.public_info and not iig_obs_type .perfect_recall:
-            pieces.append(("current_prize", 1, (1,)))
-            pieces.append(("remaining_prizes", num_cards, (num_cards,)))
-        if iig_obs_type.public_info:
-            pieces.append(("points", num_players, (num_players,)))
-        if imp_info and iig_obs_type.private_info == pyspiel.PrivateInfoType.SINGLE_PLAYER:
-            pieces.append(("private_cards", num_cards, (num_cards,)))
-        if imp_info and iig_obs_type.public_info:
-            pieces.append(("win_sequence", num_cards, (num_cards,)))
-        if iig_obs_type.public_info and iig_obs_type.perfect_recall:
-            pieces.append(("prizes", num_cards, (num_cards,)))
-        if imp_info and iig_obs_type.perfect_recall and iig_obs_type.private_info == pyspiel.PrivateInfoType.SINGLE_PLAYER:
-            pieces.append(("private_action_sequence", num_turns, (num_turns,)))
-        if iig_obs_type.public_info and not imp_info:
-            pieces.append(("cards", num_players * num_cards, (num_players, num_cards)))
-
-        # Build the single flat tensor.
-        total_size = sum(size for name, size, shape in pieces)
-        self.tensor = np.zeros(total_size, np.float32)
-
-        # Build the named & reshaped views of the bits of the flat tensor.
+        self._knowledge_type = knowledge_type
+        self.tensor = np.zeros(1)
         self.dict = {}
-        index = 0
-        for name, size, shape in pieces:
-            self.dict[name] = self.tensor[index:index + size].reshape(shape)
-            index += size
+        # if params:
+        #     raise ValueError(f"Observation parameters not supported; passed {params}")
+        #
+        # # Determine which observation pieces we want to include.
+        # imp_info = knowledge_type == "private_only" or knowledge_type == "no_po"
+        # pieces = [("player", num_players, (num_players,))]
+        # if iig_obs_type.public_info and not iig_obs_type .perfect_recall:
+        #     pieces.append(("current_prize", 1, (1,)))
+        #     pieces.append(("remaining_prizes", num_cards, (num_cards,)))
+        # if iig_obs_type.public_info:
+        #     pieces.append(("points", num_players, (num_players,)))
+        # if imp_info and iig_obs_type.private_info == pyspiel.PrivateInfoType.SINGLE_PLAYER:
+        #     pieces.append(("private_cards", num_cards, (num_cards,)))
+        # if imp_info and iig_obs_type.public_info:
+        #     pieces.append(("win_sequence", num_cards, (num_cards,)))
+        # if iig_obs_type.public_info and iig_obs_type.perfect_recall:
+        #     pieces.append(("prizes", num_cards, (num_cards,)))
+        # if imp_info and iig_obs_type.perfect_recall and iig_obs_type.private_info == pyspiel.PrivateInfoType.SINGLE_PLAYER:
+        #     pieces.append(("private_action_sequence", num_turns, (num_turns,)))
+        # if iig_obs_type.public_info and not imp_info:
+        #     pieces.append(("cards", num_players * num_cards, (num_players, num_cards)))
+        #
+        # # Build the single flat tensor.
+        # total_size = sum(size for name, size, shape in pieces)
+        # self.tensor = np.zeros(total_size, np.float32)
+        #
+        # # Build the named & reshaped views of the bits of the flat tensor.
+        # self.dict = {}
+        # index = 0
+        # for name, size, shape in pieces:
+        #     self.dict[name] = self.tensor[index:index + size].reshape(shape)
+        #     index += size
 
     def set_from(self, state, player):
         """Updates `tensor` and `dict` to reflect `state` from PoV of `player`."""
-        self.tensor.fill(0)
-        if "player" in self.dict:
-            self.dict["player"][player] = 1
-        if "points" in self.dict:
-            self.dict["points"] = state.points
-        if "prizes" in self.dict:
-            self.dict["prizes"] = state.prizes
-        if "current_prize" in self.dict:
-            self.dict["current_prize"] = state.prizes[state._current_turn] if state._current_turn < state._num_turns else -1
-        if "remaining_prizes" in self.dict:
-            remain = np.ones(state._num_cards)
-            remain[state.prizes[:state._current_turn + 1]] = 0
-            self.dict["remaining_prizes"] = remain
-        if "win_sequence" in self.dict:
-            self.dict["win_sequence"] = np.argmax(state.bets, axis=1)
-        if "private_action_sequence" in self.dict:
-            self.dict["private_action_sequence"] = state.bets[:, player]
-        if "cards" in self.dict:
-            self.dict["cards"] = state.cards
-        if "private_cards" in self.dict:
-            self.dict["private_cards"] = state.cards[player]
+        # self.tensor.fill(0)
+        # if "player" in self.dict:
+        #     self.dict["player"][player] = 1
+        # if "points" in self.dict:
+        #     self.dict["points"] = state.points
+        # if "prizes" in self.dict:
+        #     self.dict["prizes"] = state.prizes
+        # if "current_prize" in self.dict:
+        #     self.dict["current_prize"] = state.prizes[state._current_turn] if state._current_turn < state._num_turns else -1
+        # if "remaining_prizes" in self.dict:
+        #     remain = np.ones(state._num_cards)
+        #     remain[state.prizes[:state._current_turn + 1]] = 0
+        #     self.dict["remaining_prizes"] = remain
+        # if "win_sequence" in self.dict:
+        #     self.dict["win_sequence"] = np.argmax(state.bets, axis=1)
+        # if "private_action_sequence" in self.dict:
+        #     self.dict["private_action_sequence"] = state.bets[:, player]
+        # if "cards" in self.dict:
+        #     self.dict["cards"] = state.cards
+        # if "private_cards" in self.dict:
+        #     self.dict["private_cards"] = state.cards[player]
 
     def string_from(self, state, player):
         """Observation of `state` from the PoV of `player`, as a string."""
-        return (
-            f"p{state.current_player()}"
-            f"points: {(state.points * SHIFT_POINTS).sum()}"
-            f"prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()}"
-            f"cards: {(state.cards * SHIFT_CARDS).sum()}"
-            f"bets: {((state.bets + 1) * SHIFT_BETS)[:state._current_turn].sum()}"
-        )
+        if self._knowledge_type == "perfect":  # perfect recall, perfect info
+            return (
+                f"p{state.current_player()}"
+                f"points: {(state.points * SHIFT_POINTS).sum()}"
+                f"prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()}"
+                f"cards: {(state.cards * SHIFT_CARDS).sum()}"
+                f"bets: {((state.bets + 1) * SHIFT_BETS)[:state._current_turn].sum()}"
+            )
+        elif self._knowledge_type == "no_order":  # order of past bets not recalled, perfect info
+            return (
+                f"p{state.current_player()}"
+                f"points: {(state.points * SHIFT_POINTS).sum()}"
+                f"prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()}"
+                f"cards: {(state.cards * SHIFT_CARDS).sum()}"
+            )
+        elif self._knowledge_type == "private_only":  # perfect recall, cannot see other players' bets (but winners known)
+            return (
+                f"p{state.current_player()}"
+                f"points: {(state.points * SHIFT_POINTS).sum()}"
+                f"prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()}"
+                f"bets: {((state.bets + 1) * SHIFT_BETS)[:state._current_turn, player].sum()}"
+            )
+        elif self._knowledge_type == "no_po":  # order of past bets not recalled, cannot see other players' bets (but winners known)
+            return (
+                f"p{state.current_player()}"
+                f"points: {(state.points * SHIFT_POINTS).sum()}"
+                f"prizes: {((state.prizes + 1) * SHIFT_PRIZES).sum()}"
+                f"cards: {(state.cards * SHIFT_CARDS)[player].sum()}"
+            )
+        else:
+            raise NotImplementedError
 
 
 # Register the game with the OpenSpiel library
