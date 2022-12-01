@@ -3,18 +3,18 @@ from absl import app, flags
 import cProfile
 import time
 
-from predictive_cfr import PCFRSolver
+from discounted_cfr import DCFRSolver
 
 from goofspiel import *
 from exploitability import *
 import resource
 
 game_str = "python_goofspiel(num_cards=5,num_turns=3)"
-print(game_str)
+
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_integer("iterations", 5, "Number of iterations")
+flags.DEFINE_integer("iterations", 26, "Number of iterations")
 flags.DEFINE_string(
     "game",
     game_str,
@@ -27,7 +27,7 @@ flags.DEFINE_integer("print_freq", -1,
 def main(_):
     t0 = time.time()
     game = pyspiel.load_game(FLAGS.game)
-    predictive_cfr_solver = PCFRSolver(game)
+    discounted_cfr_solver = DCFRSolver(game)
     e = Exploitability(game)
     t1 = time.time()
     print(f"Setup: {t1 - t0} seconds")
@@ -39,9 +39,9 @@ def main(_):
     print_iter_count = 0
     for i in range(FLAGS.iterations):
         t0 = time.time()
-        predictive_cfr_solver.evaluate_and_update_policy()
+        discounted_cfr_solver.evaluate_and_update_policy()
         if FLAGS.print_freq > 0 and i % FLAGS.print_freq == 0:
-            conv = e.exploitability(predictive_cfr_solver.average_policy())
+            conv = e.exploitability(discounted_cfr_solver.average_policy())
             print("Iteration {} exploitability {}".format(i, conv))
         t1 = time.time()
         diff = t1 - t0
