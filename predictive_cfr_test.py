@@ -14,7 +14,7 @@ game_str = "python_goofspiel(num_cards=5,num_turns=3,knowledge_type=private_only
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_integer("iterations", 5, "Number of iterations")
+flags.DEFINE_integer("iterations", 26, "Number of iterations")
 flags.DEFINE_string(
     "game",
     game_str,
