@@ -14,13 +14,13 @@ game_str = "python_goofspiel(num_cards=5,num_turns=3)"
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_integer("iterations", 5, "Number of iterations")
+flags.DEFINE_integer("iterations", 100, "Number of iterations")
 flags.DEFINE_string(
     "game",
     game_str,
     "Name of the game")
 flags.DEFINE_integer("players", 2, "Number of players")
-flags.DEFINE_integer("print_freq", -1,
+flags.DEFINE_integer("print_freq", 5,
                      "How often to print the exploitability")
 
 
