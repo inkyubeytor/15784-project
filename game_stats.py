@@ -4,9 +4,12 @@ import sys
 
 from predictive_cfr import PCFRSolver
 
-from goofspiel import *
+from goofspiel_perfect import *
+from goofspiel_noorder import *
+from goofspiel_privateonly import *
+from goofspiel_nopo import *
 
-game_str = "python_goofspiel(num_cards=3,num_turns=3,knowledge_type=no_po)"
+game_str = "python_goofspiel_nopo(num_cards=3,num_turns=3)"
 
 
 FLAGS = flags.FLAGS
