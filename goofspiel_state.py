@@ -2,6 +2,8 @@ import numpy as np
 
 import pyspiel
 
+from goofspiel_shift import SHIFT
+
 class GoofspielStateBase(pyspiel.State):
     def __init__(self, game):
         """Constructor; should only be called by Game.new_initial_state."""
@@ -9,7 +11,6 @@ class GoofspielStateBase(pyspiel.State):
         self._num_players = game._num_players
         self._num_cards = game._num_cards
         self._num_turns = game._num_turns
-        self.shift = game.shift
 
         self.cards = np.ones((self._num_players, self._num_cards), dtype=int)
         self.bets = np.zeros((self._num_turns, self._num_players), dtype=int) - 1
@@ -113,10 +114,10 @@ class GoofspielStatePerfect(GoofspielStateBase):
         that we cache will not match the count of unique state reprs."""
         return (
             f"p{self.current_player()}"
-            f"points: {(self.points * self.shift['POINTS']).sum()}"
-            f"prizes: {((self.prizes + 1) * self.shift['PRIZES']).sum()}"
-            f"cards: {(self.cards * self.shift['CARDS']).sum()}"
-            f"bets: {((self.bets + 1) * self.shift['BETS']).sum()}"
+            f"points: {(self.points * SHIFT['POINTS']).sum()}"
+            f"prizes: {((self.prizes + 1) * SHIFT['PRIZES']).sum()}"
+            f"cards: {(self.cards * SHIFT['CARDS']).sum()}"
+            f"bets: {((self.bets + 1) * SHIFT['BETS']).sum()}"
         )
 
 
@@ -127,8 +128,8 @@ class GoofspielStateNoOrder(GoofspielStateBase):
         that we cache will not match the count of unique state reprs."""
         return (
             f"p{self.current_player()}"
-            f"points: {(self.points * self.shift['POINTS']).sum()}"
-            f"prizes: {((self.prizes + 1) * self.shift['PRIZES']).sum()}"
-            f"cards: {(self.cards * self.shift['CARDS']).sum()}"
-            f"bets: {((self.bets + 1) * self.shift['BETS'])[self._current_turn].sum() if self._current_turn < self._num_turns else -1}"
+            f"points: {(self.points * SHIFT['POINTS']).sum()}"
+            f"prizes: {((self.prizes + 1) * SHIFT['PRIZES']).sum()}"
+            f"cards: {(self.cards * SHIFT['CARDS']).sum()}"
+            f"bets: {((self.bets + 1) * SHIFT['BETS'])[self._current_turn].sum() if self._current_turn < self._num_turns else -1}"
         )

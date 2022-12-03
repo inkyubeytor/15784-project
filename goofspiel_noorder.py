@@ -29,9 +29,9 @@ class GoofspielNoOrderObserver(GoofspielObserverBase):
         """Observation of `state` from the PoV of `player`, as a string."""
         return (
             f"p{state.current_player()}"
-            f"points: {(state.points * state.shift['POINTS']).sum()}"
-            f"prizes: {((state.prizes + 1) * state.shift['PRIZES']).sum()}"
-            f"cards: {(state.cards * state.shift['CARDS']).sum()}"
+            f"points: {(state.points * self.shift['POINTS']).sum()}"
+            f"prizes: {((state.prizes + 1) * self.shift['PRIZES']).sum()}"
+            f"cards: {(state.cards * self.shift['CARDS']).sum()}"
         )
 
 

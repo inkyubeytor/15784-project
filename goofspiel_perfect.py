@@ -4,6 +4,7 @@ import pyspiel
 
 from goofspiel_base import *
 from goofspiel_state import GoofspielStatePerfect
+from goofspiel_shift import SHIFT
 
 GAME_TYPE = get_game_type("python_goofspiel_perfect", "Python Goofspiel Perfect")
 
@@ -29,10 +30,10 @@ class GoofspielPerfectObserver(GoofspielObserverBase):
         """Observation of `state` from the PoV of `player`, as a string."""
         return (
             f"p{state.current_player()}"
-            f"points: {(state.points * state.shift['POINTS']).sum()}"
-            f"prizes: {((state.prizes + 1) * state.shift['PRIZES']).sum()}"
-            f"cards: {(state.cards * state.shift['CARDS']).sum()}"
-            f"bets: {((state.bets + 1) * state.shift['BETS'])[:state._current_turn].sum()}"
+            f"points: {(state.points * self.shift['POINTS']).sum()}"
+            f"prizes: {((state.prizes + 1) * self.shift['PRIZES']).sum()}"
+            f"cards: {(state.cards * self.shift['CARDS']).sum()}"
+            f"bets: {((state.bets + 1) * self.shift['BETS'])[:state._current_turn].sum()}"
         )
 
 

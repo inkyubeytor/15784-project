@@ -9,12 +9,14 @@ from goofspiel_noorder import *
 from goofspiel_privateonly import *
 from goofspiel_nopo import *
 
+game_str = "python_goofspiel_perfect(num_cards=3,num_turns=3)"
+
 FLAGS = flags.FLAGS
 
 flags.DEFINE_integer("iterations", 10, "Number of iterations")
 flags.DEFINE_string(
     "game",
-    "python_goofspiel_nopo(num_cards=3,num_turns=3)",
+    game_str,
     # "turn_based_simultaneous_game(game=goofspiel(imp_info=False,num_cards=3,players=2,points_order=random))",
     "Name of the game")
 flags.DEFINE_integer("players", 2, "Number of players")

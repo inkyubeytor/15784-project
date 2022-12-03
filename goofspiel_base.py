@@ -2,6 +2,8 @@ import numpy as np
 
 import pyspiel
 
+import goofspiel_shift
+
 DEFAULT_PARAMS = {
     "num_cards": 4,
     "num_turns": 4,
@@ -37,6 +39,8 @@ class GoofspielGameBase(pyspiel.Game):
         self._num_cards = params["num_cards"]
         self._num_turns = params["num_turns"]
 
+        goofspiel_shift.set_shift(self._num_players, self._num_cards, self._num_turns)
+
         game_info = pyspiel.GameInfo(
             num_distinct_actions=params["num_cards"],
             max_chance_outcomes=params["num_cards"] if params["points_order"] == "random" else 0,
@@ -48,13 +52,6 @@ class GoofspielGameBase(pyspiel.Game):
         )
 
         super().__init__(game_type, game_info, params or dict())
-
-        self.shift = {
-            "CARDS": 2 ** np.arange(self._num_players * self._num_cards).reshape((self._num_players, self._num_cards)),
-            "BETS": (self._num_cards + 1) ** np.arange(self._num_turns * self._num_players).reshape((self._num_turns, self._num_players)),
-            "POINTS": (self._num_cards ** 2) ** np.arange(self._num_players),
-            "PRIZES": (self._num_cards + 1) ** np.arange(self._num_cards)
-        }
 
     def new_initial_state(self):
         """Returns a state corresponding to the start of a game."""
@@ -74,6 +71,7 @@ class GoofspielObserverBase:
 
     def __init__(self, iig_obs_type, num_players, num_cards, num_turns, shift, obs_params):
         """Initializes an empty observation tensor."""
+        self.shift = shift
         self.tensor = np.zeros(1)
         self.dict = {}
 
