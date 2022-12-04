@@ -2,7 +2,7 @@ from goofspiel_perfect import *
 from goofspiel_noorder import *
 from goofspiel_privateonly import *
 from goofspiel_nopo import *
-from exploitability import Exploitability
+from exploitability import Exploitability, map_policy
 import os
 import pickle
 import numpy as np
@@ -40,7 +40,7 @@ def prune_near_uniform(policy, residual_thresold):
 
 
 if __name__ == "__main__":
-    for name in ["perfect", "noorder"]:
+    for name in ["noorder", "perfect"]:
         for nc, nt in [(3, 3), (4, 3), (4, 4), (5, 3)]:
             nc_str = f"num_cards={nc}"
             nt_str = f"num_turns={nt}"
@@ -57,5 +57,10 @@ if __name__ == "__main__":
                 print(f"threshold={threshold}")
                 perfect_game = pyspiel.load_game(f"python_goofspiel_perfect({nc_str},{nt_str})")
                 pruned_policy = prune_low_prob(avg_policy, threshold)
+                if name != "perfect":
+                    map_fname = f"python_goofspiel_perfect_to_{name}_infoset_mapping({nc_str},{nt_str}).pkl"
+                    with open(f"mappings/{map_fname}", "rb") as f:
+                        mapping = pickle.load(f)
+                    pruned_policy = map_policy(pruned_policy, mapping, perfect_game)
                 e = Exploitability(perfect_game)
                 print(e.exploitability(pruned_policy))
