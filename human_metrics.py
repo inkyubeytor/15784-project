@@ -2,15 +2,16 @@ import numpy as np
 
 
 def get_policy_list(s, player):
+    return get_policy_list_from_policy(s.average_policy(), player)
+
+def get_policy_list_from_policy(policy, player):
     local_policies = []
-    avg_policy = s.average_policy()
-    legal_actions_mask = avg_policy.legal_actions_mask
-    policy_table = avg_policy.action_probability_array
-    for state in avg_policy.states_per_player[player]:
-        i = avg_policy.state_lookup[state]
+    legal_actions_mask = policy.legal_actions_mask
+    policy_table = policy.action_probability_array
+    for state in policy.states_per_player[player]:
+        i = policy.state_lookup[state]
         local_policies.append(policy_table[i][legal_actions_mask[i].astype(bool)])
     return local_policies
-
 
 def thinking_isets(policy_list):
     return [policy for policy in policy_list if not np.allclose(policy, np.ones_like(policy) / len(policy))]

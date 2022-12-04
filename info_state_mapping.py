@@ -10,6 +10,8 @@ from goofspiel_noorder import *
 from goofspiel_privateonly import *
 from goofspiel_nopo import *
 
+from open_spiel.python.policy import TabularPolicy
+
 
 def generate_mapping(game):
     """Counts the number of non-terminal non-chance states."""
@@ -43,6 +45,26 @@ def main(_):
             filename = f"mappings/python_goofspiel_perfect_to_{name_str}_infoset_mapping(num_cards={num_cards},num_turns={num_turns}).pkl"
             with open(filename, "wb") as f:
                 pickle.dump(mapping, f)
+
+
+def apply_mapping(name, nc, nt, policy):
+    nc_str = f"num_cards={nc}"
+    nt_str = f"num_turns={nt}"
+    map_fname = f"python_goofspiel_perfect_to_{name}_infoset_mapping({nc_str},{nt_str}).pkl"
+
+    with open(f"mappings/{map_fname}", "rb") as f:
+        mapping = pickle.load(f)
+
+    perfect_game = pyspiel.load_game(f"python_goofspiel_perfect({nc_str},{nt_str})")
+    mapped_policy = TabularPolicy(perfect_game)
+
+    for perfect_info_state in mapped_policy.state_lookup:
+        info_state = mapping[perfect_info_state]
+        perfect_state_policy = mapped_policy.policy_for_key(perfect_info_state)
+        state_policy = policy.policy_for_key(info_state)
+        perfect_state_policy[:] = state_policy
+
+    return mapped_policy
 
 
 if __name__ == "__main__":
