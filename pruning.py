@@ -18,6 +18,13 @@ def probability_hist(policy):
     plt.show()
 
 
+def residual_hist(policy):
+    tmp = policy.legal_actions_mask / np.sum(policy.legal_actions_mask, axis=-1, keepdims=True)
+    residuals = np.abs(policy.action_probability_array - tmp).mean(axis=-1).flatten()
+    plt.hist(residuals, bins=20, range=(1e-8, residuals.max()))
+    plt.show()
+
+
 def prune_low_prob(policy, prob_threshold):
     result = policy.__copy__()
     for info_state in result.state_lookup:
