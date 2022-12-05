@@ -1,0 +1,112 @@
+python_goofspiel_perfect(num_cards=3,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=33, t_support=69)(Player 1: num_t_iset=19, t_support=41), exploitability=0.0009329453831087702
+threshold=0.01, (Player 0: num_t_iset=33, t_support=48)(Player 1: num_t_iset=19, t_support=25), exploitability=0.0
+threshold=0.05, (Player 0: num_t_iset=33, t_support=38)(Player 1: num_t_iset=19, t_support=25), exploitability=0.0
+threshold=0.1, (Player 0: num_t_iset=33, t_support=38)(Player 1: num_t_iset=19, t_support=25), exploitability=0.0
+threshold=0.15, (Player 0: num_t_iset=33, t_support=38)(Player 1: num_t_iset=19, t_support=25), exploitability=0.0
+threshold=0.2, (Player 0: num_t_iset=33, t_support=38)(Player 1: num_t_iset=19, t_support=23), exploitability=0.0
+python_goofspiel_noorder(num_cards=3,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=33, t_support=69)(Player 1: num_t_iset=19, t_support=41), exploitability=0.0009329453831087702
+threshold=0.01, (Player 0: num_t_iset=33, t_support=48)(Player 1: num_t_iset=19, t_support=25), exploitability=0.0
+threshold=0.05, (Player 0: num_t_iset=33, t_support=38)(Player 1: num_t_iset=19, t_support=25), exploitability=0.0
+threshold=0.1, (Player 0: num_t_iset=33, t_support=38)(Player 1: num_t_iset=19, t_support=25), exploitability=0.0
+threshold=0.15, (Player 0: num_t_iset=33, t_support=38)(Player 1: num_t_iset=19, t_support=25), exploitability=0.0
+threshold=0.2, (Player 0: num_t_iset=33, t_support=38)(Player 1: num_t_iset=19, t_support=23), exploitability=0.0
+python_goofspiel_privateonly(num_cards=3,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=29, t_support=61)(Player 1: num_t_iset=23, t_support=49), exploitability=0.0009119301051976861
+threshold=0.01, (Player 0: num_t_iset=29, t_support=42)(Player 1: num_t_iset=23, t_support=33), exploitability=0.0
+threshold=0.05, (Player 0: num_t_iset=29, t_support=34)(Player 1: num_t_iset=23, t_support=33), exploitability=0.0
+threshold=0.1, (Player 0: num_t_iset=29, t_support=34)(Player 1: num_t_iset=23, t_support=29), exploitability=0.0
+threshold=0.15, (Player 0: num_t_iset=29, t_support=34)(Player 1: num_t_iset=23, t_support=29), exploitability=0.0
+threshold=0.2, (Player 0: num_t_iset=29, t_support=34)(Player 1: num_t_iset=23, t_support=27), exploitability=0.0
+python_goofspiel_nopo(num_cards=3,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=29, t_support=61)(Player 1: num_t_iset=23, t_support=49), exploitability=0.0009119301051976861
+threshold=0.01, (Player 0: num_t_iset=29, t_support=42)(Player 1: num_t_iset=23, t_support=33), exploitability=0.0
+threshold=0.05, (Player 0: num_t_iset=29, t_support=34)(Player 1: num_t_iset=23, t_support=33), exploitability=0.0
+threshold=0.1, (Player 0: num_t_iset=29, t_support=34)(Player 1: num_t_iset=23, t_support=29), exploitability=0.0
+threshold=0.15, (Player 0: num_t_iset=29, t_support=34)(Player 1: num_t_iset=23, t_support=29), exploitability=0.0
+threshold=0.2, (Player 0: num_t_iset=29, t_support=34)(Player 1: num_t_iset=23, t_support=27), exploitability=0.0
+python_goofspiel_perfect(num_cards=4,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=1270, t_support=2728)(Player 1: num_t_iset=568, t_support=1267), exploitability=0.0009959467878860675
+threshold=0.01, (Player 0: num_t_iset=1270, t_support=1987)(Player 1: num_t_iset=568, t_support=850), exploitability=0.00074146653923449
+threshold=0.05, (Player 0: num_t_iset=1270, t_support=1597)(Player 1: num_t_iset=568, t_support=741), exploitability=0.00074146653923449
+threshold=0.1, (Player 0: num_t_iset=1270, t_support=1414)(Player 1: num_t_iset=568, t_support=684), exploitability=0.00074146653923449
+threshold=0.15, (Player 0: num_t_iset=1270, t_support=1373)(Player 1: num_t_iset=568, t_support=633), exploitability=0.03073656844513548
+threshold=0.2, (Player 0: num_t_iset=1270, t_support=1353)(Player 1: num_t_iset=568, t_support=623), exploitability=0.10056898912730193
+python_goofspiel_noorder(num_cards=4,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=1151, t_support=2490)(Player 1: num_t_iset=559, t_support=1248), exploitability=0.000952859659731368
+threshold=0.01, (Player 0: num_t_iset=1151, t_support=1805)(Player 1: num_t_iset=559, t_support=852), exploitability=0.0007979210781214122
+threshold=0.05, (Player 0: num_t_iset=1151, t_support=1459)(Player 1: num_t_iset=559, t_support=757), exploitability=0.0007979210781214122
+threshold=0.1, (Player 0: num_t_iset=1151, t_support=1298)(Player 1: num_t_iset=559, t_support=695), exploitability=0.0007979210781214122
+threshold=0.15, (Player 0: num_t_iset=1151, t_support=1262)(Player 1: num_t_iset=559, t_support=661), exploitability=0.03030018442028293
+threshold=0.2, (Player 0: num_t_iset=1151, t_support=1243)(Player 1: num_t_iset=559, t_support=648), exploitability=0.06532952876069376
+python_goofspiel_privateonly(num_cards=4,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=783, t_support=1688)(Player 1: num_t_iset=438, t_support=970), exploitability=0.026337538679557668
+threshold=0.01, (Player 0: num_t_iset=783, t_support=1192)(Player 1: num_t_iset=438, t_support=659), exploitability=0.026245688521688182
+threshold=0.05, (Player 0: num_t_iset=783, t_support=929)(Player 1: num_t_iset=438, t_support=569), exploitability=0.026245688521688182
+threshold=0.1, (Player 0: num_t_iset=783, t_support=879)(Player 1: num_t_iset=438, t_support=542), exploitability=0.026245688521688182
+threshold=0.15, (Player 0: num_t_iset=783, t_support=850)(Player 1: num_t_iset=438, t_support=508), exploitability=0.026245688521688182
+threshold=0.2, (Player 0: num_t_iset=783, t_support=831)(Player 1: num_t_iset=438, t_support=493), exploitability=0.026245688521688182
+python_goofspiel_nopo(num_cards=4,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=630, t_support=1382)(Player 1: num_t_iset=408, t_support=912), exploitability=0.027165334423145296
+threshold=0.01, (Player 0: num_t_iset=630, t_support=980)(Player 1: num_t_iset=408, t_support=639), exploitability=0.027005024033209896
+threshold=0.05, (Player 0: num_t_iset=630, t_support=771)(Player 1: num_t_iset=408, t_support=533), exploitability=0.027005024033209896
+threshold=0.1, (Player 0: num_t_iset=630, t_support=720)(Player 1: num_t_iset=408, t_support=493), exploitability=0.027005024033209903
+threshold=0.15, (Player 0: num_t_iset=630, t_support=694)(Player 1: num_t_iset=408, t_support=475), exploitability=0.027005024033209903
+threshold=0.2, (Player 0: num_t_iset=630, t_support=679)(Player 1: num_t_iset=408, t_support=448), exploitability=0.027005024033209903
+python_goofspiel_perfect(num_cards=4,num_turns=4).pickle
+threshold=0.0, (Player 0: num_t_iset=1551, t_support=3287)(Player 1: num_t_iset=814, t_support=1770), exploitability=0.0008275504878620915
+threshold=0.01, (Player 0: num_t_iset=1551, t_support=2202)(Player 1: num_t_iset=814, t_support=1121), exploitability=0.0008173242636241862
+threshold=0.05, (Player 0: num_t_iset=1551, t_support=1827)(Player 1: num_t_iset=814, t_support=1060), exploitability=0.0008173242636241862
+threshold=0.1, (Player 0: num_t_iset=1551, t_support=1782)(Player 1: num_t_iset=814, t_support=1016), exploitability=0.0008173242636241862
+threshold=0.15, (Player 0: num_t_iset=1551, t_support=1761)(Player 1: num_t_iset=814, t_support=978), exploitability=0.0457369328025331
+threshold=0.2, (Player 0: num_t_iset=1551, t_support=1726)(Player 1: num_t_iset=814, t_support=961), exploitability=0.08600011209360224
+python_goofspiel_noorder(num_cards=4,num_turns=4).pickle
+threshold=0.0, (Player 0: num_t_iset=1437, t_support=3059)(Player 1: num_t_iset=790, t_support=1722), exploitability=0.0009463577956353975
+threshold=0.01, (Player 0: num_t_iset=1437, t_support=2013)(Player 1: num_t_iset=790, t_support=1105), exploitability=0.0009393792503100823
+threshold=0.05, (Player 0: num_t_iset=1437, t_support=1706)(Player 1: num_t_iset=790, t_support=1028), exploitability=0.0009393792503100823
+threshold=0.1, (Player 0: num_t_iset=1437, t_support=1662)(Player 1: num_t_iset=790, t_support=989), exploitability=0.004738214045295473
+threshold=0.15, (Player 0: num_t_iset=1437, t_support=1644)(Player 1: num_t_iset=790, t_support=960), exploitability=0.04779858259219074
+threshold=0.2, (Player 0: num_t_iset=1437, t_support=1617)(Player 1: num_t_iset=790, t_support=947), exploitability=0.08819950033945546
+python_goofspiel_privateonly(num_cards=4,num_turns=4).pickle
+threshold=0.0, (Player 0: num_t_iset=923, t_support=1967)(Player 1: num_t_iset=733, t_support=1579), exploitability=0.13660355172763677
+threshold=0.01, (Player 0: num_t_iset=923, t_support=1274)(Player 1: num_t_iset=733, t_support=1034), exploitability=0.13798624548022487
+threshold=0.05, (Player 0: num_t_iset=923, t_support=1116)(Player 1: num_t_iset=733, t_support=967), exploitability=0.13784425889667007
+threshold=0.1, (Player 0: num_t_iset=923, t_support=1087)(Player 1: num_t_iset=733, t_support=936), exploitability=0.13752432095586692
+threshold=0.15, (Player 0: num_t_iset=923, t_support=1068)(Player 1: num_t_iset=733, t_support=878), exploitability=0.2327388019598477
+threshold=0.2, (Player 0: num_t_iset=923, t_support=1056)(Player 1: num_t_iset=733, t_support=855), exploitability=0.237291895933241
+python_goofspiel_nopo(num_cards=4,num_turns=4).pickle
+threshold=0.0, (Player 0: num_t_iset=709, t_support=1539)(Player 1: num_t_iset=623, t_support=1365), exploitability=0.1628911072515004
+threshold=0.01, (Player 0: num_t_iset=709, t_support=999)(Player 1: num_t_iset=623, t_support=882), exploitability=0.16421710907470854
+threshold=0.05, (Player 0: num_t_iset=709, t_support=919)(Player 1: num_t_iset=623, t_support=836), exploitability=0.16413165004959585
+threshold=0.1, (Player 0: num_t_iset=709, t_support=887)(Player 1: num_t_iset=623, t_support=801), exploitability=0.16626623395953571
+threshold=0.15, (Player 0: num_t_iset=709, t_support=866)(Player 1: num_t_iset=623, t_support=775), exploitability=0.24676989233429866
+threshold=0.2, (Player 0: num_t_iset=709, t_support=853)(Player 1: num_t_iset=623, t_support=760), exploitability=0.26784929368414456
+python_goofspiel_perfect(num_cards=5,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=10228, t_support=31194)(Player 1: num_t_iset=3526, t_support=10967), exploitability=0.0008887788517349098
+threshold=0.01, (Player 0: num_t_iset=10228, t_support=18349)(Player 1: num_t_iset=3526, t_support=5823), exploitability=0.00070631318337257
+threshold=0.05, (Player 0: num_t_iset=10228, t_support=13705)(Player 1: num_t_iset=3526, t_support=4653), exploitability=0.0007063131833725714
+threshold=0.1, (Player 0: num_t_iset=10228, t_support=13350)(Player 1: num_t_iset=3526, t_support=4195), exploitability=0.039229050027174014
+threshold=0.15, (Player 0: num_t_iset=10228, t_support=13210)(Player 1: num_t_iset=3526, t_support=4062), exploitability=0.06845389383420819
+threshold=0.2, (Player 0: num_t_iset=10228, t_support=13071)(Player 1: num_t_iset=3526, t_support=4008), exploitability=0.08783614089251174
+python_goofspiel_noorder(num_cards=5,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=8973, t_support=27429)(Player 1: num_t_iset=3241, t_support=10112), exploitability=0.000999764033115804
+threshold=0.01, (Player 0: num_t_iset=8973, t_support=16020)(Player 1: num_t_iset=3241, t_support=5472), exploitability=0.0007817178158767354
+threshold=0.05, (Player 0: num_t_iset=8973, t_support=12072)(Player 1: num_t_iset=3241, t_support=4432), exploitability=0.0007817178158767354
+threshold=0.1, (Player 0: num_t_iset=8973, t_support=11746)(Player 1: num_t_iset=3241, t_support=4006), exploitability=0.03956007118045109
+threshold=0.15, (Player 0: num_t_iset=8973, t_support=11588)(Player 1: num_t_iset=3241, t_support=3850), exploitability=0.06874058248345716
+threshold=0.2, (Player 0: num_t_iset=8973, t_support=11467)(Player 1: num_t_iset=3241, t_support=3743), exploitability=0.08238046598683867
+python_goofspiel_privateonly(num_cards=5,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=3200, t_support=9850)(Player 1: num_t_iset=1896, t_support=5894), exploitability=0.029540073672716105
+threshold=0.01, (Player 0: num_t_iset=3200, t_support=6033)(Player 1: num_t_iset=1896, t_support=3413), exploitability=0.02935523982582126
+threshold=0.05, (Player 0: num_t_iset=3200, t_support=4170)(Player 1: num_t_iset=1896, t_support=2752), exploitability=0.02935523982582126
+threshold=0.1, (Player 0: num_t_iset=3200, t_support=3924)(Player 1: num_t_iset=1896, t_support=2439), exploitability=0.0420111636580005
+threshold=0.15, (Player 0: num_t_iset=3200, t_support=3756)(Player 1: num_t_iset=1896, t_support=2304), exploitability=0.0420111636580005
+threshold=0.2, (Player 0: num_t_iset=3200, t_support=3686)(Player 1: num_t_iset=1896, t_support=2163), exploitability=0.04950016448008818
+python_goofspiel_nopo(num_cards=5,num_turns=3).pickle
+threshold=0.0, (Player 0: num_t_iset=2301, t_support=7153)(Player 1: num_t_iset=1561, t_support=4889), exploitability=0.02903633751444273
+threshold=0.01, (Player 0: num_t_iset=2301, t_support=4286)(Player 1: num_t_iset=1561, t_support=2845), exploitability=0.0289144166783023
+threshold=0.05, (Player 0: num_t_iset=2301, t_support=3083)(Player 1: num_t_iset=1561, t_support=2312), exploitability=0.0289144166783023
+threshold=0.1, (Player 0: num_t_iset=2301, t_support=2849)(Player 1: num_t_iset=1561, t_support=2020), exploitability=0.042191374912785136
+threshold=0.15, (Player 0: num_t_iset=2301, t_support=2751)(Player 1: num_t_iset=1561, t_support=1897), exploitability=0.04145604227247718
+threshold=0.2, (Player 0: num_t_iset=2301, t_support=2661)(Player 1: num_t_iset=1561, t_support=1780), exploitability=0.049564007993956355
