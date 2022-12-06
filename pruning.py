@@ -98,7 +98,7 @@ if __name__ == "__main__":
         e = Exploitability(perfect_game)
 
         # for name in ["perfect", "noorder", "privateonly", "nopo"]:
-        for name in ["perfect"]:
+        for name in ["perfect", "noorder", "privateonly", "nopo"]:
             game_name = f"python_goofspiel_{name}({nc_str},{nt_str})"
             fname = f"{game_name}.pickle"
             print(fname)
@@ -110,7 +110,7 @@ if __name__ == "__main__":
             # probability_hist(avg_policy, f"{nc}-{nt}-prob")
             # # residual_hist(avg_policy, f"{nc}-{nt}-res")
 
-            for threshold in [0.01, 0.05, 0.10]:
+            for threshold in [0.20]:
                 pruned_policy = prune_near_uniform_kl(avg_policy, threshold)
 
                 policy_stats = ""

@@ -1,0 +1,4 @@
+python_goofspiel_nopo(num_cards=5,num_turns=3).pickle
+threshold=0.01, (Player 0: num_t_iset=2294, t_support=7132)(Player 1: num_t_iset=1550, t_support=4855), exploitability=0.029036347670102887
+threshold=0.05, (Player 0: num_t_iset=2269, t_support=7056)(Player 1: num_t_iset=1522, t_support=4768), exploitability=0.02903626871563717
+threshold=0.1, (Player 0: num_t_iset=2262, t_support=7030)(Player 1: num_t_iset=1511, t_support=4733), exploitability=0.03258415741180033

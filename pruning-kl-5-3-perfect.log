@@ -1,0 +1,4 @@
+python_goofspiel_perfect(num_cards=5,num_turns=3).pickle
+threshold=0.01, (Player 0: num_t_iset=10224, t_support=31178)(Player 1: num_t_iset=3494, t_support=10851), exploitability=0.0008887504716478561
+threshold=0.05, (Player 0: num_t_iset=10197, t_support=31083)(Player 1: num_t_iset=3472, t_support=10775), exploitability=0.0008889086091849004
+threshold=0.1, (Player 0: num_t_iset=10164, t_support=30971)(Player 1: num_t_iset=3436, t_support=10660), exploitability=0.0008892336209060151
