@@ -14,7 +14,11 @@ from open_spiel.python.policy import TabularPolicy
 
 
 def probability_hist(policy):
-    plt.hist(policy.action_probability_array.flatten(), bins=20, range=(1e-8, 1))
+    probs = policy.action_probability_array.flatten()
+    logbins = np.logspace(-5, 0, num=20)
+    plt.hist(probs, bins=logbins)
+    plt.xscale("log")
+    plt.yscale("log")
     plt.show()
 
 
@@ -57,7 +61,7 @@ if __name__ == "__main__":
             f"python_goofspiel_perfect({nc_str},{nt_str})")
         e = Exploitability(perfect_game)
 
-        for name in ["perfect", "noorder", "privateonly", "nopo"]:
+        for name in ["perfect"]:  # , "noorder", "privateonly", "nopo"
             game_name = f"python_goofspiel_{name}({nc_str},{nt_str})"
             fname = f"{game_name}.pickle"
             print(fname)
@@ -65,20 +69,22 @@ if __name__ == "__main__":
                 solver = pickle.load(f)
             avg_policy = solver.average_policy()
 
-            for threshold in [0.00, 0.01, 0.05, 0.10, 0.15, 0.20]:
-                pruned_policy = prune_low_prob(avg_policy, threshold)
+            probability_hist(avg_policy)
 
-                policy_stats = ""
-                for player in [0, 1]:
-                    tlist = thinking_isets(get_policy_list_from_policy(pruned_policy, player))
-                    num_t_iset = len(tlist)
-                    t_support = total_support_size(tlist)
-                    policy_stats += f"(Player {player}: {num_t_iset=}, {t_support=})"
-
-                if name != "perfect":
-                    mapped_policy = apply_mapping(name, nc, nt, pruned_policy)
-                else:
-                    mapped_policy = pruned_policy
-                print(f"{threshold=}, {policy_stats}, exploitability={e.exploitability(mapped_policy)}")
-                with open(f"models/pruned/{game_name}-{threshold}.pickle", "wb+") as f:
-                    pickle.dump(pruned_policy, f)
+            # for threshold in [0.00, 0.01, 0.05, 0.10, 0.15, 0.20]:
+            #     pruned_policy = prune_low_prob(avg_policy, threshold)
+            #
+            #     policy_stats = ""
+            #     for player in [0, 1]:
+            #         tlist = thinking_isets(get_policy_list_from_policy(pruned_policy, player))
+            #         num_t_iset = len(tlist)
+            #         t_support = total_support_size(tlist)
+            #         policy_stats += f"(Player {player}: {num_t_iset=}, {t_support=})"
+            #
+            #     if name != "perfect":
+            #         mapped_policy = apply_mapping(name, nc, nt, pruned_policy)
+            #     else:
+            #         mapped_policy = pruned_policy
+            #     print(f"{threshold=}, {policy_stats}, exploitability={e.exploitability(mapped_policy)}")
+            #     with open(f"models/pruned/{game_name}-{threshold}.pickle", "wb+") as f:
+            #         pickle.dump(pruned_policy, f)
