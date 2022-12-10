@@ -9,10 +9,15 @@ from goofspiel_perfect import *
 from goofspiel_noorder import *
 from goofspiel_privateonly import *
 from goofspiel_nopo import *
+
+from goofspiel_noorder_asymmetric import *
+from goofspiel_privateonly_asymmetric import *
+from goofspiel_nopo_asymmetric import *
+
 from exploitability import *
 import resource
 
-game_str = "python_goofspiel_perfect(num_cards=3,num_turns=3)"
+game_str = "python_goofspiel_privateonly_asymmetric(abstract_player=0,num_cards=3,num_turns=3)"
 
 
 FLAGS = flags.FLAGS

@@ -5,6 +5,7 @@ import pyspiel
 DEFAULT_PARAMS = {
     "num_cards": 4,
     "num_turns": 4,
+    "abstract_player": 0,
     "players": 2,
     "points_order": "random",
     "returns_type": "win_loss"
