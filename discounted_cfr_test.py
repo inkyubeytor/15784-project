@@ -9,13 +9,16 @@ from goofspiel_perfect import *
 from goofspiel_noorder import *
 from goofspiel_privateonly import *
 from goofspiel_nopo import *
+from goofspiel_noorder_asymmetric import *
+from goofspiel_privateonly_asymmetric import *
+from goofspiel_nopo_asymmetric import *
 
 from exploitability import *
 import resource
 import pickle
 
-game_str = "python_goofspiel_nopo(num_cards=4,num_turns=4)"
-iters = 218
+game_str = "python_goofspiel_noorder_asymmetric(num_cards=5,num_turns=3,abstract_player=0)"
+iters = 71
 print(game_str, iters)
 
 FLAGS = flags.FLAGS
@@ -26,7 +29,7 @@ flags.DEFINE_string(
     game_str,
     "Name of the game")
 flags.DEFINE_integer("players", 2, "Number of players")
-flags.DEFINE_integer("print_freq", -1,
+flags.DEFINE_integer("print_freq", 1,
                      "How often to print the exploitability")
 
 
@@ -43,29 +46,29 @@ def main(_):
     noprint_iter_count = 0
     print_iter_time = 0
     print_iter_count = 0
-    # with open(f"models/{game_str}.log", "w+") as f:
-    for i in range(FLAGS.iterations):
-        print(f"Iter {i}")
-        t0 = time.time()
-        discounted_cfr_solver.evaluate_and_update_policy()
-        if FLAGS.print_freq > 0 and i % FLAGS.print_freq == 0:
-            conv = e.exploitability(discounted_cfr_solver.average_policy())
-            # print("Iteration {} exploitability {}".format(i, conv), file=f)
-            print("Iteration {} exploitability {}".format(i, conv))
-            if conv < 0.001:
-                break
-        t1 = time.time()
-        diff = t1 - t0
-        if i == 0:
-            first_iter_time += diff
-        elif FLAGS.print_freq > 0 and i % FLAGS.print_freq == 0:
-            print_iter_time += diff
-            print_iter_count += 1
-        else:
-            noprint_iter_time += diff
-            noprint_iter_count += 1
+    with open(f"models/asymmetric/{game_str}.log", "w+") as f:
+        for i in range(FLAGS.iterations):
+            # print(f"Iter {i}")
+            t0 = time.time()
+            discounted_cfr_solver.evaluate_and_update_policy()
+            if FLAGS.print_freq > 0 and i % FLAGS.print_freq == 0:
+                conv = e.exploitability(discounted_cfr_solver.average_policy())
+                print("Iteration {} exploitability {}".format(i, conv), file=f)
+                print("Iteration {} exploitability {}".format(i, conv))
+                if conv < 0.001:
+                    break
+            t1 = time.time()
+            diff = t1 - t0
+            if i == 0:
+                first_iter_time += diff
+            elif FLAGS.print_freq > 0 and i % FLAGS.print_freq == 0:
+                print_iter_time += diff
+                print_iter_count += 1
+            else:
+                noprint_iter_time += diff
+                noprint_iter_count += 1
 
-    with open(f"models/{game_str}.pickle", "wb+") as f:
+    with open(f"models/asymmetric/{game_str}.pickle", "wb+") as f:
         pickle.dump(discounted_cfr_solver, f)
 
 
