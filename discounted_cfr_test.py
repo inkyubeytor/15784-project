@@ -17,8 +17,8 @@ from exploitability import *
 import resource
 import pickle
 
-game_str = "python_goofspiel_nopo_asymmetric(num_cards=5,num_turns=3,abstract_player=1)"
-iters = 70
+game_str = "python_goofspiel_privateonly_asymmetric(num_cards=5,num_turns=3,abstract_player=0)"
+iters = 60
 print(game_str, iters)
 
 FLAGS = flags.FLAGS
