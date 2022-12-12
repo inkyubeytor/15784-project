@@ -1,0 +1,36 @@
+python_goofspiel_noorder_asymmetric_mapped(num_cards=4,num_turns=4).pickle
+threshold=0.01, (Player 0: num_t_iset=1437, t_support=2013)(Player 1: num_t_iset=790, t_support=1105), exploitability=0.0009393792503100823
+threshold=0.05, (Player 0: num_t_iset=1437, t_support=1706)(Player 1: num_t_iset=790, t_support=1028), exploitability=0.0009393792503100823
+threshold=0.1, (Player 0: num_t_iset=1437, t_support=1662)(Player 1: num_t_iset=790, t_support=989), exploitability=0.004738214045295473
+threshold=0.15, (Player 0: num_t_iset=1437, t_support=1644)(Player 1: num_t_iset=790, t_support=960), exploitability=0.04779858259219074
+threshold=0.2, (Player 0: num_t_iset=1437, t_support=1617)(Player 1: num_t_iset=790, t_support=947), exploitability=0.08819950033945546
+python_goofspiel_privateonly_asymmetric_mapped(num_cards=4,num_turns=4).pickle
+threshold=0.01, (Player 0: num_t_iset=958, t_support=1376)(Player 1: num_t_iset=649, t_support=931), exploitability=0.018830914337425043
+threshold=0.05, (Player 0: num_t_iset=958, t_support=1211)(Player 1: num_t_iset=649, t_support=838), exploitability=0.022697017184023154
+threshold=0.1, (Player 0: num_t_iset=958, t_support=1170)(Player 1: num_t_iset=649, t_support=810), exploitability=0.030067949078470085
+threshold=0.15, (Player 0: num_t_iset=958, t_support=1149)(Player 1: num_t_iset=649, t_support=797), exploitability=0.051010400923541116
+threshold=0.2, (Player 0: num_t_iset=958, t_support=1129)(Player 1: num_t_iset=649, t_support=776), exploitability=0.08253286946034447
+python_goofspiel_nopo_asymmetric_mapped(num_cards=4,num_turns=4).pickle
+threshold=0.01, (Player 0: num_t_iset=755, t_support=1108)(Player 1: num_t_iset=556, t_support=798), exploitability=0.020342901486037793
+threshold=0.05, (Player 0: num_t_iset=755, t_support=991)(Player 1: num_t_iset=556, t_support=751), exploitability=0.02430264835347641
+threshold=0.1, (Player 0: num_t_iset=755, t_support=958)(Player 1: num_t_iset=556, t_support=726), exploitability=0.02800071370897366
+threshold=0.15, (Player 0: num_t_iset=755, t_support=937)(Player 1: num_t_iset=556, t_support=706), exploitability=0.055543449034727896
+threshold=0.2, (Player 0: num_t_iset=755, t_support=919)(Player 1: num_t_iset=556, t_support=686), exploitability=0.0801866797498956
+python_goofspiel_noorder_asymmetric_mapped(num_cards=5,num_turns=3).pickle
+threshold=0.01, (Player 0: num_t_iset=8973, t_support=16020)(Player 1: num_t_iset=3241, t_support=5472), exploitability=0.0007817178158767354
+threshold=0.05, (Player 0: num_t_iset=8973, t_support=12072)(Player 1: num_t_iset=3241, t_support=4432), exploitability=0.0007817178158767354
+threshold=0.1, (Player 0: num_t_iset=8973, t_support=11746)(Player 1: num_t_iset=3241, t_support=4006), exploitability=0.03956007118045109
+threshold=0.15, (Player 0: num_t_iset=8973, t_support=11588)(Player 1: num_t_iset=3241, t_support=3850), exploitability=0.06874058248345716
+threshold=0.2, (Player 0: num_t_iset=8973, t_support=11467)(Player 1: num_t_iset=3241, t_support=3743), exploitability=0.08238046598683867
+python_goofspiel_privateonly_asymmetric_mapped(num_cards=5,num_turns=3).pickle
+threshold=0.01, (Player 0: num_t_iset=3402, t_support=6257)(Player 1: num_t_iset=1972, t_support=3408), exploitability=0.004423973075834469
+threshold=0.05, (Player 0: num_t_iset=3402, t_support=4281)(Player 1: num_t_iset=1972, t_support=2734), exploitability=0.004423973075834469
+threshold=0.1, (Player 0: num_t_iset=3402, t_support=4105)(Player 1: num_t_iset=1972, t_support=2419), exploitability=0.02367887731310954
+threshold=0.15, (Player 0: num_t_iset=3402, t_support=4020)(Player 1: num_t_iset=1972, t_support=2292), exploitability=0.02620456274492543
+threshold=0.2, (Player 0: num_t_iset=3402, t_support=3940)(Player 1: num_t_iset=1972, t_support=2214), exploitability=0.04877862111945323
+python_goofspiel_nopo_asymmetric_mapped(num_cards=5,num_turns=3).pickle
+threshold=0.01, (Player 0: num_t_iset=2514, t_support=4582)(Player 1: num_t_iset=1706, t_support=3096), exploitability=0.0043430341169303785
+threshold=0.05, (Player 0: num_t_iset=2514, t_support=3267)(Player 1: num_t_iset=1706, t_support=2423), exploitability=0.0043430341169303785
+threshold=0.1, (Player 0: num_t_iset=2514, t_support=3064)(Player 1: num_t_iset=1706, t_support=2173), exploitability=0.024059541489463064
+threshold=0.15, (Player 0: num_t_iset=2514, t_support=2956)(Player 1: num_t_iset=1706, t_support=2046), exploitability=0.025944448801083368
+threshold=0.2, (Player 0: num_t_iset=2514, t_support=2858)(Player 1: num_t_iset=1706, t_support=1954), exploitability=0.048627535982902176
