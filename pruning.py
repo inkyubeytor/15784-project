@@ -89,7 +89,7 @@ if __name__ == "__main__":
     from info_state_mapping import apply_mapping
     from human_metrics import get_policy_list_from_policy, thinking_isets, total_support_size
 
-    for nc, nt in [(4, 4)]:
+    for nc, nt in [(4, 4), (5, 3)]:
     # for nc, nt in [(3, 3), (4, 3), (4, 4), (5, 3)]:
         nc_str = f"num_cards={nc}"
         nt_str = f"num_turns={nt}"
@@ -97,19 +97,22 @@ if __name__ == "__main__":
             f"python_goofspiel_perfect({nc_str},{nt_str})")
         e = Exploitability(perfect_game)
 
-        for name in ["perfect", "noorder", "privateonly", "nopo"]:
-            game_name = f"python_goofspiel_{name}({nc_str},{nt_str})"
+        for name in ["noorder", "privateonly", "nopo"]:
+            game_name = f"python_goofspiel_{name}_asymmetric_mapped({nc_str},{nt_str})"
             fname = f"{game_name}.pickle"
             print(fname)
-            with open(f"models/{fname}", "rb") as f:
-                solver = pickle.load(f)
-            avg_policy = solver.average_policy()
+            # with open(f"models/asymmetric/{fname}", "rb") as f:
+            #     solver = pickle.load(f)
+            # avg_policy = solver.average_policy()
+            with open(f"models/asymmetric/{fname}", "rb") as f:
+                avg_policy = pickle.load(f)
 
             # kl_hist(avg_policy, f"{nc}-{nt}-kl")
             # probability_hist(avg_policy, f"{nc}-{nt}-prob")
             # # residual_hist(avg_policy, f"{nc}-{nt}-res")
 
-            for threshold in [0.40]:
+            # for threshold in [0.01, 0.05, 0.10, 0.15, 0.20]:
+            for threshold in [0.01, 0.05, 0.10, 0.20, 0.30, 0.40]:
                 pruned_policy = prune_near_uniform_kl(avg_policy, threshold)
 
                 policy_stats = ""
