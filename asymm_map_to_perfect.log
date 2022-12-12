@@ -1,0 +1,12 @@
+python_goofspiel_noorder_asymmetric_mapped(num_cards=4,num_turns=4)
+0.0009463577956353951
+python_goofspiel_privateonly_asymmetric_mapped(num_cards=4,num_turns=4)
+0.018880271315346787
+python_goofspiel_nopo_asymmetric_mapped(num_cards=4,num_turns=4)
+0.020407113490774356
+python_goofspiel_noorder_asymmetric_mapped(num_cards=5,num_turns=3)
+0.0009997640331157998
+python_goofspiel_privateonly_asymmetric_mapped(num_cards=5,num_turns=3)
+0.004626603691015946
+python_goofspiel_nopo_asymmetric_mapped(num_cards=5,num_turns=3)
+0.00453605095216909
