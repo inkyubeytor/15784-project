@@ -1,3 +1,7 @@
+"""
+Implements optimizations on the baseline https://github.com/deepmind/open_spiel/blob/master/open_spiel/python/algorithms/discounted_cfr.py algorithm.
+"""
+
 import numpy as np
 
 from open_spiel.python.algorithms import cfr
@@ -8,8 +12,7 @@ _InfoStateNode = cfr._InfoStateNode  # pylint: disable=protected-access
 
 class _DCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
     """
-    Implements Predictive CFR+ from https://arxiv.org/pdf/2007.14358.pdf.
-    Largely derived from the DCFR implementation.
+    Largely derived from the DCFR implementation of OpenSpiel.
     """
 
     def __init__(self, game, alternating_updates, linear_averaging,
@@ -64,11 +67,7 @@ class _DCFRSolver(cfr._CFRSolver):  # pylint: disable=protected-access
 
     def _compute_counterfactual_regret_for_player(self, state, policies,
                                                   reach_probabilities, player):
-        """Increments the cumulative regrets and policy for `player`. This is
-          copied from the DCFR function, as we still want to have linear or
-          quadratic averaging available. However, we also store 'optimism' values
-          for optimistic updates.
-
+        """
         Args:
           state: The initial game state to analyze from.
           policies: Unused. To be compatible with the `_CFRSolver` signature.
